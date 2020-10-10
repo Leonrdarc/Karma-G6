@@ -8,41 +8,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:588458125733:android:12186f24dc653f81f7204c",
-        "android_client_info": {
-          "package_name": "com.movil.karmag6"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "588458125733-5g0qago098r9gkhm0gn179f4j2p9bikg.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBiCiwf-pEKsKqFhJogtqkEhuIyeg6P33I"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "588458125733-5g0qago098r9gkhm0gn179f4j2p9bikg.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:588458125733:android:7feb1db47f6125ccf7204c",
+        "mobilesdk_app_id": "1:588458125733:android:31ebfa450f0c164bf7204c",
         "android_client_info": {
           "package_name": "com.pmovil.karmag6"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "588458125733-nbk70ce3t8qogcp5ifrnn6pr7goduarb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pmovil.karmag6",
+            "certificate_hash": "ca3e20cd05ead9db17425cf80196c64ca953e9b5"
+          }
+        },
         {
           "client_id": "588458125733-5g0qago098r9gkhm0gn179f4j2p9bikg.apps.googleusercontent.com",
           "client_type": 3
