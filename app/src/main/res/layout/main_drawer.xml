@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="#9C27B0"
-            app:popupTheme="”@style/ThemeOverlay.AppCompat.Light”" />
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
     </FrameLayout>
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationView"
