@@ -1,4 +1,6 @@
 package com.pmovil.karmag6.model.order
 
-class SetOrder {
-}
+data class SetAssign(
+    var state: Int = 0,
+    var messengerId: String = ""
+)

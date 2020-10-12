@@ -1,4 +1,7 @@
 package com.pmovil.karmag6.model
 
-class Chat {
-}
+data class Chat (
+    var orderId: String = "",
+    var message: String = "",
+    var createdAt: String = ""
+)
