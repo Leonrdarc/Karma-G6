@@ -1,7 +1,9 @@
 package com.pmovil.karmag6.viewmodel
 
 import UsersRepository
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
@@ -14,6 +16,7 @@ import java.util.*
 class AuthViewModel : ViewModel() {
     private val authRepository = SessionsRepository()
     private val userRepository = UsersRepository()
+    var userInfo = MutableLiveData<User>()
 
     fun getCurrentUser(): LiveData<FirebaseUser> {
         return authRepository.getUser()
@@ -21,6 +24,8 @@ class AuthViewModel : ViewModel() {
 
     fun login(email: String, password: String) {
         viewModelScope.launch {
+            val user = userRepository.findOneByEmail(email)
+            userInfo.value = user
             authRepository.login(email, password)
         }
     }

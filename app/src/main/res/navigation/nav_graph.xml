@@ -10,4 +10,8 @@
         android:name="com.pmovil.karmag6.ui.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/appDrawerFragment"
+        android:name="com.pmovil.karmag6.ui.AppDrawerFragment"
+        android:label="AppDrawerFragment" />
 </navigation>
