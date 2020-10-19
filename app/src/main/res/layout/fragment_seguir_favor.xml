@@ -34,6 +34,7 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/status_img"
             android:layout_width="wrap_content"
             android:layout_height="200dp"
             android:layout_gravity="center"
@@ -146,6 +147,7 @@
                 android:text="En el bambu 2 de lado de acá pero no como quien va si no como quien viene" />
 
             <Button
+                android:id="@+id/completar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

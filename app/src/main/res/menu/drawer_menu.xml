@@ -6,5 +6,6 @@
         <item android:id="@+id/profile" android:title="Perfil" android:icon="@drawable/ic_baseline_account_circle_24"/>
         <item android:id="@+id/todo" android:title="Tareas" android:icon="@drawable/ic_todo"/>
         <item android:id="@+id/favor" android:title="Favores" android:icon="@drawable/ic_favor"/>
+        <item android:id="@+id/logout" android:title="Cerrar Sesión" android:icon="@drawable/ic_favor"/>
     </group>
 </menu>

@@ -30,7 +30,7 @@ class LoginFragment : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
         loginButton.setOnClickListener{
-            authViewModel.login(view.textEmailAddress.text.toString(), view.textPassword.text.toString())
+            authViewModel.login(view.email.text.toString(), view.password.text.toString())
             try{
                 val navController = findNavController()
                 authViewModel.getCurrentUser().observe(viewLifecycleOwner, Observer { user ->

@@ -37,12 +37,31 @@ class SeguirFavorFragment : Fragment(), IOnBackPressed {
                 view.description.text = order?.description
                 view.comments.text = order?.description
                 view.title.text = "Estado de tu favor"
-                view.prefix.text = "Tu favor fue aceptado por "
+                if(order?.state == 0){
+                    view.prefix.text = "Tu favor ha sido enviado y está en espera de ser asignado"
+                    view.status_img.setImageDrawable(resources.getDrawable(R.drawable.ic_pending))
+                    view.user_name.isVisible = false
+                    view.sufix.isVisible = false
+                }else if(order?.state == 1){
+                    view.prefix.text ="Tu favor fue aceptado por "
+                    view.status_img.setImageDrawable(resources.getDrawable(R.drawable.ic_in_progress))
+                    view.sufix.isVisible = true
+                    view.user_name.isVisible = true
+                    view.user_name.text = orderViewModel.username
+                }else {
+                    view.prefix.text = "Gracias por utilizar Karma! En un momento confimaremos el favor"
+                    view.status_img.setImageDrawable(resources.getDrawable(R.drawable.ic_completed))
+                    view.sufix.isVisible = false
+                    view.user_name.isVisible = false
+                }
                 view.location.text = order?.location
                 view.favor_tipo.text = order?.type
-                view.user_name.text = orderViewModel.username
                 view.fab.setOnClickListener {
                     comm.passDataToChat(order?.uid!!, customer!!)
+                }
+                view.completar.setOnClickListener {
+                    orderViewModel.completeAsOwner(order?.uid!!)
+                    orderViewModel.getActualOrderAsMessenger(currentUser.value?.email!!)
                 }
             })
         }else{
@@ -51,15 +70,26 @@ class SeguirFavorFragment : Fragment(), IOnBackPressed {
                 view.description.text = order?.description
                 view.comments.text = order?.description
                 view.title.text = "Estado de tu tarea"
-                view.prefix.text = "Has aceptado el favor para "
                 view.sufix.isVisible = false
+                if(order?.state == 1){
+                    view.prefix.text = "Has aceptado la tarea de "
+                    view.user_name.text = orderViewModel.username
+                }else if(order?.state == 2){
+                    view.prefix.text ="Tu tarea ha sido completada! Espera a que tu cliente confirme. "
+                    view.status_img.setImageDrawable(resources.getDrawable(R.drawable.ic_completed))
+                    view.user_name.text = orderViewModel.username
+                }
                 view.location.text = order?.location
                 view.favor_tipo.text = order?.type
-                view.user_name.text = orderViewModel.username
                 view.fab.setOnClickListener {
                     comm.passDataToChat(order?.uid!!, customer!!)
                 }
+                view.completar.setOnClickListener {
+                    orderViewModel.completeAsMessenger(order?.uid!!)
+                    orderViewModel.getActualOrderAsMessenger(currentUser.value?.email!!)
+                }
             })
+
         }
 
         return view
