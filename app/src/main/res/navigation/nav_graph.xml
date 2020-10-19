@@ -9,9 +9,17 @@
         android:id="@+id/loginFragment"
         android:name="com.pmovil.karmag6.ui.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_registroFragment"
+            app:destination="@id/registroFragment" />
+    </fragment>
     <fragment
         android:id="@+id/appDrawerFragment"
         android:name="com.pmovil.karmag6.ui.AppDrawerFragment"
         android:label="AppDrawerFragment" />
+    <fragment
+        android:id="@+id/registroFragment"
+        android:name="com.pmovil.karmag6.ui.RegistroFragment"
+        android:label="RegistroFragment" />
 </navigation>

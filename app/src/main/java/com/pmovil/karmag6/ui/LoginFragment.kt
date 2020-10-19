@@ -41,10 +41,15 @@ class LoginFragment : Fragment() {
                     }
                 })
             }catch(err: Error){
-                Log.d("Ñerdaaaaa", "Login Failed")
+                Log.d("F", "Login Failed")
             }
 
         }
+        registrarTextButton.setOnClickListener{
+            val navController = findNavController()
+            navController.navigate(R.id.registroFragment)
+        }
+
     }
 
     override fun onCreateView(
