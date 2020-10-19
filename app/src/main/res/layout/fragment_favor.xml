@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:textSize="27sp"
             android:textColor="@color/colorPrimaryDark"
             android:text="Pide un Favor"/>
         <ImageView
@@ -117,6 +117,7 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/pedir_favor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_background"

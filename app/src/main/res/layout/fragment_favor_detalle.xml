@@ -120,6 +120,7 @@
                 android:text="En el bambu 2 de lado de acá pero no como quien va si no como quien viene" />
 
             <Button
+                android:id="@+id/atender_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="25dp"

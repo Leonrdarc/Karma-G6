@@ -15,6 +15,7 @@ import com.pmovil.karmag6.R
 import com.pmovil.karmag6.viewmodel.AuthViewModel
 import com.pmovil.karmag6.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.fragment_login.*
+import kotlinx.android.synthetic.main.fragment_login.view.*
 
 class LoginFragment : Fragment() {
 
@@ -29,12 +30,14 @@ class LoginFragment : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
         loginButton.setOnClickListener{
-            //authViewModel.register(emai, "Test", "pruebatest@gmail.com", "password12345#")
+            authViewModel.login(view.textEmailAddress.text.toString(), view.textPassword.text.toString())
             try{
                 val navController = findNavController()
                 authViewModel.getCurrentUser().observe(viewLifecycleOwner, Observer { user ->
                     if(user != null){
                         navController.navigate(R.id.appDrawerFragment)
+                    }else{
+                        Log.d("Error", "Mala contra")
                     }
                 })
             }catch(err: Error){

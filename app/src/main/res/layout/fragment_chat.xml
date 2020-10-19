@@ -33,6 +33,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:minHeight="48dp"
+        android:paddingVertical="10dp"
         android:background="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -50,15 +51,22 @@
             android:layout_height="wrap_content"
             android:maxLines="6"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/btnSend"
-            android:text="enviar"
-            android:textSize="14dp"
             android:clickable="true"
+            android:src="@drawable/ic_baseline_send_24"
+            android:tint="#FFF"
+            android:scaleType="fitCenter"
+            android:paddingVertical="8dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="6dp"
+            android:adjustViewBounds="true"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
+            android:layout_marginRight="18dp"
+            android:background="@drawable/circle_button_light"
             android:gravity="center"
-            android:layout_gravity="bottom" />
+            android:layout_gravity="center" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

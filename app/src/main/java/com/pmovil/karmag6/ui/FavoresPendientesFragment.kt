@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.pmovil.karmag6.R
 import com.pmovil.karmag6.adapters.FavoresRVAdapter
 import com.pmovil.karmag6.interfaces.Communicator
+import com.pmovil.karmag6.viewmodel.AuthViewModel
 import com.pmovil.karmag6.viewmodel.OrderViewModel
 import kotlinx.android.synthetic.main.fragment_favores_pendientes.view.*
 
@@ -21,6 +22,8 @@ class FavoresPendientesFragment : Fragment() {
 
     private var adapter : FavoresRVAdapter? = null
     private val orderVM : OrderViewModel by activityViewModels()
+    private val authViewModel : AuthViewModel by activityViewModels()
+
     lateinit var comm: Communicator
 
     override fun onCreateView(
@@ -30,6 +33,7 @@ class FavoresPendientesFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_favores_pendientes, container, false)
         val spinner: Spinner = view.type_spinner
+        val currentUser = authViewModel.getCurrentUser()
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter.createFromResource(
             requireContext(),
@@ -42,7 +46,14 @@ class FavoresPendientesFragment : Fragment() {
             spinner.adapter = adapter
         }
         comm = activity as Communicator
-        orderVM.listUnassigned()
+        orderVM.getActualOrderAsMessenger(currentUser.value?.email!!)
+        orderVM.orderByMessenger.observe(viewLifecycleOwner, Observer {
+            if(it == null){
+                orderVM.listUnassigned()
+            }else{
+                navigateuid(false)
+            }
+        })
         orderVM.unassignedOrders.observe(viewLifecycleOwner, Observer { orders ->
             adapter = FavoresRVAdapter(orders, ::navigate)
             view.favoresPendientesRV.layoutManager = LinearLayoutManager(context)
@@ -53,6 +64,10 @@ class FavoresPendientesFragment : Fragment() {
 
     private fun navigate (orderId : Int){
         comm.passDataCom(orderId)
+    }
+
+    private fun navigateuid (customer: Boolean){
+        comm.passDataSetOrderToState(customer)
     }
 
 }

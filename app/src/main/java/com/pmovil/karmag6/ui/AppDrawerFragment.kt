@@ -45,6 +45,10 @@ class AppDrawerFragment : Fragment() {
                     activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragment_container, FavoresPendientesFragment())?.commit()
                     true
                 }
+                R.id.favor -> {
+                    activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragment_container, FavorFragment())?.commit()
+                    true
+                }
                 else -> {false}
             }
         }

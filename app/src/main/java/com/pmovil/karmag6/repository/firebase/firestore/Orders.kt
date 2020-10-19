@@ -55,25 +55,31 @@ class OrdersRepository {
     }
 
     suspend fun getActualOrderAsOwner(email: String): Order? {
-        return db.collection("orders")
+        val data = db.collection("orders")
             .whereEqualTo("ownerId", email)
-            .whereLessThan("state", 2)
-            .orderBy("createdAt", Query.Direction.DESCENDING)
             .limit(1)
             .get()
             .await()
             .toObjects(Order::class.java)[0]
+        return if(data.uid!="NO-UUID" && data.state<2){
+            data
+        }else{
+            null
+        }
     }
 
     suspend fun getActualOrderAsMessenger(email: String): Order? {
-        return db.collection("orders")
+        val data = db.collection("orders")
             .whereEqualTo("messengerId", email)
-            .whereLessThan("state", 2)
-            .orderBy("createdAt", Query.Direction.DESCENDING)
             .limit(1)
             .get()
             .await()
             .toObjects(Order::class.java)[0]
+        return if(data.uid!="NO-UUID" && data.state<2){
+            data
+        }else{
+            null
+        }
     }
 
     suspend fun setMessenger(orderId: String, messengerId: String) {

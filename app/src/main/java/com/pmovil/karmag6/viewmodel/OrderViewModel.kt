@@ -18,8 +18,11 @@ class OrderViewModel : ViewModel() {
     val lastThree = MutableLiveData<List<Order>>()
     val lastThreeList = mutableListOf<Order>()
     var oneOrder = MutableLiveData<Order>()
-    var orderByOwner = Order()
-    var orderByMessenger = Order()
+    var orderByOwner = MutableLiveData<Order?>()
+    var orderByMessenger = MutableLiveData<Order?>()
+    var flag = MutableLiveData<Boolean>()
+    var createReady = MutableLiveData<Boolean>()
+    var username: String = ""
 
     fun listUnassigned() {
         viewModelScope.launch {
@@ -49,20 +52,29 @@ class OrderViewModel : ViewModel() {
     fun getActualOrderAsOwner(email: String){
         viewModelScope.launch {
             val newOrder = orderRepository.getActualOrderAsOwner(email)
-            orderByOwner = newOrder!!
+            if(newOrder!= null) {
+                val user = userRepository.findOneByEmail(newOrder.ownerId)
+                username = "${user.name} ${user.lastname}"
+            }
+            orderByOwner.value = newOrder
         }
     }
 
     fun getActualOrderAsMessenger(email: String){
         viewModelScope.launch {
             val newOrder = orderRepository.getActualOrderAsMessenger(email)
-            orderByMessenger = newOrder!!
+            if(newOrder!= null) {
+                val user = userRepository.findOneByEmail(newOrder.ownerId)
+                username = "${user.name} ${user.lastname}"
+            }
+            orderByMessenger.value = newOrder
         }
     }
 
     fun setMessenger(orderId: String, email: String){
         viewModelScope.launch {
            orderRepository.setMessenger(orderId,email)
+            flag.value = true
         }
     }
 
@@ -123,6 +135,7 @@ class OrderViewModel : ViewModel() {
                     )}"
                 )
             )
+            createReady.value = true
         }
     }
 }
