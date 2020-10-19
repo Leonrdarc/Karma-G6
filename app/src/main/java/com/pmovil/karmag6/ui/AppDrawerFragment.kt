@@ -42,7 +42,7 @@ class AppDrawerFragment : Fragment() {
                     true
                 }
                 R.id.todo -> {
-                    activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragment_container, CreateServiceFragment())?.commit()
+                    activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragment_container, FavorFragment())?.commit()
                     true
                 }
                 else -> {false}
