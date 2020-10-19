@@ -10,13 +10,20 @@ import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.pmovil.karmag6.R
+import com.pmovil.karmag6.adapters.FavoresRVAdapter
+import com.pmovil.karmag6.adapters.UltimosRVAdapter
 import com.pmovil.karmag6.viewmodel.AuthViewModel
+import com.pmovil.karmag6.viewmodel.OrderViewModel
 import com.pmovil.karmag6.viewmodel.UserViewModel
+import kotlinx.android.synthetic.main.fragment_favores_pendientes.view.*
+import kotlinx.android.synthetic.main.fragment_profile.view.*
 
 class ProfileFragment : Fragment() {
 
-
+    private var adapter : UltimosRVAdapter? = null
+    private val orderVM : OrderViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,14 +45,18 @@ class ProfileFragment : Fragment() {
 
         userViewModel.findOneByEmail(currentUser.value?.email!!)
         userViewModel.userInfo.observe(viewLifecycleOwner, Observer { userInfo ->
-        if(userInfo.karma == -4){
-           //Está Cargando :(
-        }
-        else{
-            //Cargó :)
-        }
+            if(userInfo!=null){
+                view.karma.text = userInfo.karma.toString()
+                view.user_name.text = userInfo.name
+            }
         })
 
+        orderVM.getLastThree(currentUser.value?.email!!)
+        orderVM.lastThree.observe(viewLifecycleOwner, Observer { orders ->
+            adapter = UltimosRVAdapter(orders)
+            view.ultimosRV.layoutManager = LinearLayoutManager(context)
+            view.ultimosRV.adapter = adapter
+        })
 
         Log.d("user", userViewModel.userInfo.value.toString())
 

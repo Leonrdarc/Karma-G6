@@ -5,56 +5,54 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.pmovil.karmag6.R
+import com.pmovil.karmag6.adapters.FavoresRVAdapter
+import com.pmovil.karmag6.interfaces.Communicator
+import com.pmovil.karmag6.viewmodel.OrderViewModel
+import kotlinx.android.synthetic.main.fragment_favores_pendientes.view.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [FavoresPendientesFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class FavoresPendientesFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var adapter : FavoresRVAdapter? = null
+    private val orderVM : OrderViewModel by activityViewModels()
+    lateinit var comm: Communicator
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favores_pendientes, container, false)
+        val view = inflater.inflate(R.layout.fragment_favores_pendientes, container, false)
+        val spinner: Spinner = view.type_spinner
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.types_array,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            spinner.adapter = adapter
+        }
+        comm = activity as Communicator
+        orderVM.listUnassigned()
+        orderVM.unassignedOrders.observe(viewLifecycleOwner, Observer { orders ->
+            adapter = FavoresRVAdapter(orders, ::navigate)
+            view.favoresPendientesRV.layoutManager = LinearLayoutManager(context)
+            view.favoresPendientesRV.adapter = adapter
+        })
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FavoresPendientesFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FavoresPendientesFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun navigate (orderId : Int){
+        comm.passDataCom(orderId)
     }
+
 }

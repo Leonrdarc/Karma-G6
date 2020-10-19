@@ -1,6 +1,7 @@
 package com.pmovil.karmag6.viewmodel
 
 import UsersRepository
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pmovil.karmag6.model.order.Order
@@ -12,32 +13,36 @@ import java.util.*
 class OrderViewModel : ViewModel() {
     private val orderRepository = OrdersRepository()
     private val userRepository = UsersRepository()
-    val unassignedOrders = mutableListOf<Order>()
-    val lastThree = mutableListOf<Order>()
-    var oneOrder = Order()
+    val unassignedOrders = MutableLiveData<List<Order>>()
+    val unassignedOrdersList = mutableListOf<Order>()
+    val lastThree = MutableLiveData<List<Order>>()
+    val lastThreeList = mutableListOf<Order>()
+    var oneOrder = MutableLiveData<Order>()
     var orderByOwner = Order()
     var orderByMessenger = Order()
 
     fun listUnassigned() {
         viewModelScope.launch {
             val newOrders = orderRepository.findUnassigned()
-            unassignedOrders.clear()
-            unassignedOrders.addAll(newOrders)
+            unassignedOrdersList.clear()
+            unassignedOrdersList.addAll(newOrders)
+            unassignedOrders.value = unassignedOrdersList
         }
     }
 
     fun getLastThree(email: String) {
         viewModelScope.launch {
             val newOrders = orderRepository.getLastThree(email)
-            lastThree.clear()
-            lastThree.addAll(newOrders)
+            lastThreeList.clear()
+            lastThreeList.addAll(newOrders)
+            lastThree.value = lastThreeList
         }
     }
 
     fun getOne(id: String){
         viewModelScope.launch {
             val newOrder = orderRepository.findOneById(id)
-            oneOrder = newOrder
+            oneOrder.value = newOrder
         }
     }
 
@@ -80,6 +85,12 @@ class OrderViewModel : ViewModel() {
             else{
                 orderRepository.completeOwner(orderId,1)
             }
+        }
+    }
+
+    fun completeOrder(orderId: String){
+        viewModelScope.launch {
+            orderRepository.completeOrder(orderId)
         }
     }
 

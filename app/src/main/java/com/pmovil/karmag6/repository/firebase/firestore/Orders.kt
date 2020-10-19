@@ -16,6 +16,23 @@ class OrdersRepository {
             .add(order).await()
     }
 
+    suspend fun completeOrder(orderId: String) {
+        db.collection("orders")
+            .whereEqualTo("uid", orderId)
+            .limit(1).get().await().forEach {
+                val data: Order = it.toObject(Order::class.java)
+                if(data.ownerCompleted){
+                    it.reference.update("messengerCompleted", true, "state", 2).await()
+                }else{
+                    if(data.messengerCompleted) {
+                        it.reference.update("ownerCompleted", true, "state", 2).await()
+                    }else{
+                        it.reference.update("ownerCompleted", true).await()
+                    }
+                }
+            }
+    }
+
     suspend fun getLastThree(email: String): MutableList<Order> {
         return db.collection("orders")
             .whereEqualTo("ownerId", email)

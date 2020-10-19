@@ -13,4 +13,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
+
+    <string-array name="types_array">
+        <item>Tipo de favor...</item>
+        <item>Sacar fotocopias</item>
+        <item>Comprar en KM5</item>
+        <item>Buscar domicilio</item>
+    </string-array>
+
 </resources>
