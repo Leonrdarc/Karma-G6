@@ -47,7 +47,9 @@ class ChatFragment : Fragment(), IOnBackPressed {
                 message.message = view.txtMessage.text.toString()
                 message.sentBy = currentUser.value?.email!!
                 message.orderId = "randomUUID"
+                message.sendDate = (chatViewModel.messagesList.size+1).toString();
                 chatViewModel.create(message)
+
             }
 
         }

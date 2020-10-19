@@ -11,14 +11,16 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.pmovil.karmag6.MainActivity
 import com.pmovil.karmag6.R
 import com.pmovil.karmag6.adapters.FavoresRVAdapter
 import com.pmovil.karmag6.interfaces.Communicator
+import com.pmovil.karmag6.interfaces.IOnBackPressed
 import com.pmovil.karmag6.viewmodel.AuthViewModel
 import com.pmovil.karmag6.viewmodel.OrderViewModel
 import kotlinx.android.synthetic.main.fragment_favores_pendientes.view.*
 
-class FavoresPendientesFragment : Fragment() {
+class FavoresPendientesFragment : Fragment(), IOnBackPressed {
 
     private var adapter : FavoresRVAdapter? = null
     private val orderVM : OrderViewModel by activityViewModels()
@@ -68,6 +70,11 @@ class FavoresPendientesFragment : Fragment() {
 
     private fun navigateuid (customer: Boolean){
         comm.passDataSetOrderToState(customer)
+    }
+
+    override fun onBackPressed(): Boolean {
+        (activity as MainActivity).openCloseNavigationDrawer();
+        return true
     }
 
 }

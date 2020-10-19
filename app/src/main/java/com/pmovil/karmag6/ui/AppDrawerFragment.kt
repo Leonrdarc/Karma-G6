@@ -10,10 +10,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.navigation.NavigationView
 import com.pmovil.karmag6.MainActivity
 import com.pmovil.karmag6.R
+import com.pmovil.karmag6.viewmodel.AuthViewModel
+import com.pmovil.karmag6.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.fragment_app_drawer.*
+import kotlinx.android.synthetic.main.fragment_profile.view.*
+import kotlinx.android.synthetic.main.nav_header.view.*
 
 
 class AppDrawerFragment : Fragment() {
@@ -26,10 +33,22 @@ class AppDrawerFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_app_drawer, container, false)
         val toolbar: Toolbar = view.findViewById(R.id.toolbar)
+        val authViewModel: AuthViewModel by activityViewModels()
+        val userViewModel: UserViewModel by activityViewModels()
+
         if(activity is AppCompatActivity){
             (activity as AppCompatActivity).setSupportActionBar(toolbar)
             (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
+
+        val currentUser = authViewModel.getCurrentUser()
+        userViewModel.findOneByEmail(currentUser.value?.email!!)
+        userViewModel.userInfo.observe(viewLifecycleOwner, Observer { userInfo ->
+            if(userInfo!=null){
+                view.name_drawer.text = userInfo.karma.toString()
+                view.karma_drawer.text = userInfo.name + " " + userInfo.lastname
+            }
+        })
         drawer = view.findViewById(R.id.drawer_layout)
         var toggle = ActionBarDrawerToggle((activity as AppCompatActivity), drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer.addDrawerListener(toggle)

@@ -15,7 +15,7 @@ class ChatViewModel: ViewModel() {
     private var db: FirebaseFirestore = Firebase.firestore
     private lateinit var chatListener: DocumentReference;
     var messagesLiveData = MutableLiveData<List<Message>>()
-    val messagesList = mutableListOf<Message>()
+    var messagesList = mutableListOf<Message>()
 
     private val docRef =db.collection("chat").addSnapshotListener{snapshot, e ->
         if(e == null){
@@ -24,6 +24,7 @@ class ChatViewModel: ViewModel() {
                 messagesList.clear()
                 messagesList.addAll(newMessages)
                 messagesList.sortedByDescending { it.sendDate }
+                messagesList = messagesList.reversed().toMutableList()
                 messagesLiveData.value = messagesList
 
             }

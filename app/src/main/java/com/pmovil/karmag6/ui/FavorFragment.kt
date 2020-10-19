@@ -10,15 +10,17 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import com.pmovil.karmag6.MainActivity
 import com.pmovil.karmag6.R
 import com.pmovil.karmag6.interfaces.Communicator
+import com.pmovil.karmag6.interfaces.IOnBackPressed
 import com.pmovil.karmag6.viewmodel.AuthViewModel
 import com.pmovil.karmag6.viewmodel.OrderViewModel
 import kotlinx.android.synthetic.main.fragment_favor.view.*
 import kotlinx.android.synthetic.main.fragment_favores_pendientes.view.*
 
 
-class FavorFragment : Fragment() {
+class FavorFragment : Fragment(), IOnBackPressed {
     lateinit var comm: Communicator
 
     override fun onCreateView(
@@ -69,4 +71,8 @@ class FavorFragment : Fragment() {
         return view
     }
 
+    override fun onBackPressed(): Boolean {
+        (activity as MainActivity).openCloseNavigationDrawer();
+        return true
+    }
 }

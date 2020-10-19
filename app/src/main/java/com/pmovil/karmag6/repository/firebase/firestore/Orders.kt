@@ -61,7 +61,7 @@ class OrdersRepository {
             .get()
             .await()
             .toObjects(Order::class.java)[0]
-        return if(data.uid!="NO-UUID" && data.state<2){
+        return if(data.uid!="NO-UUID"){
             data
         }else{
             null
@@ -75,7 +75,7 @@ class OrdersRepository {
             .get()
             .await()
             .toObjects(Order::class.java)[0]
-        return if(data.uid!="NO-UUID" && data.state<2){
+        return if(data.uid!="NO-UUID"){
             data
         }else{
             null

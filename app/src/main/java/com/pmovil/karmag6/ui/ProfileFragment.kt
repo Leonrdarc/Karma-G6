@@ -11,16 +11,18 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.pmovil.karmag6.MainActivity
 import com.pmovil.karmag6.R
 import com.pmovil.karmag6.adapters.FavoresRVAdapter
 import com.pmovil.karmag6.adapters.UltimosRVAdapter
+import com.pmovil.karmag6.interfaces.IOnBackPressed
 import com.pmovil.karmag6.viewmodel.AuthViewModel
 import com.pmovil.karmag6.viewmodel.OrderViewModel
 import com.pmovil.karmag6.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.fragment_favores_pendientes.view.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 
-class ProfileFragment : Fragment() {
+class ProfileFragment : Fragment(), IOnBackPressed {
 
     private var adapter : UltimosRVAdapter? = null
     private val orderVM : OrderViewModel by activityViewModels()
@@ -64,4 +66,8 @@ class ProfileFragment : Fragment() {
 
     }
 
+    override fun onBackPressed(): Boolean {
+        (activity as MainActivity).openCloseNavigationDrawer();
+        return true
+    }
 }

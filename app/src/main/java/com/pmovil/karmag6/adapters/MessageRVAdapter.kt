@@ -25,7 +25,7 @@ class MessageRVAdapter (val context: Context, private val init_messages: List<Me
 
         override fun bind(message: Message) {
             messageText.text = message.message
-            timeText.text = message.sendDate
+            timeText.text = ""
         }
     }
 
@@ -37,7 +37,7 @@ class MessageRVAdapter (val context: Context, private val init_messages: List<Me
         override fun bind(message: Message) {
             messageText.text = message.message
             userText.text = message.sentBy
-            timeText.text = message.sendDate.toString()
+            timeText.text = ""
         }
     }
 
